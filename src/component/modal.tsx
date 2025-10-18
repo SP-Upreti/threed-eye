@@ -51,12 +51,14 @@ export default function Modal() {
         function animate() {
             requestAnimationFrame(animate);
 
-            // Clamp rotation to 0-180 degrees (0 to Math.PI radians)
-            const targetRotationY = MouseX / 2;
-            const targetRotationX = MouseY / 4;
+            if (object) {
+                // Clamp rotation to 0-180 degrees (0 to Math.PI radians)
+                const targetRotationY = MouseX / 2;
+                const targetRotationX = MouseY / 4;
 
-            object.rotation.y = Math.max(-0.9, Math.min(0, targetRotationY));
-            object.rotation.x = Math.max(-4, Math.min(0, targetRotationX));
+                object.rotation.y = Math.max(-0.9, Math.min(0, targetRotationY));
+                object.rotation.x = Math.max(-4, Math.min(0, targetRotationX));
+            }
             renderer.render(scene, camera);
         }
         animate();
@@ -68,10 +70,17 @@ export default function Modal() {
         }
         window.addEventListener('resize', onWindowResize);
 
-    })
+    }, [])
 
     return (
         <div className='min-h-screen'>
+            <div className="text-7xl p-10 uppercase font-bold">
+                <h2>I Can See You</h2>
+            </div>
+            <div className="absolute p-8 inset-0 text-7xl uppercase font-bold flex justify-end items-end">
+                <h2>You Cant see me</h2>
+
+            </div>
             <canvas className='fixed h-screen w-screen inset-0 ' ref={canvasRef} />
         </div>
     )
