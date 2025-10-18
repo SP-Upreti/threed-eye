@@ -1,7 +1,6 @@
 "use client"
 import React, { useLayoutEffect } from 'react'
 import * as THREE from 'three'
-import { OrbitControls } from '@react-three/drei';
 import { GLTFLoader } from 'three-stdlib';
 
 export default function Modal() {
@@ -10,7 +9,7 @@ export default function Modal() {
     useLayoutEffect(() => {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        let object;
+        let object: THREE.Group;
         let controls;
         let objectToRender = 'eye';
         let MouseX = window.innerWidth / 2;
