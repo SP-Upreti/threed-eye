@@ -10,11 +10,8 @@ export default function Modal() {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         let object: THREE.Group;
-        let controls;
-        let objectToRender = 'eye';
         let MouseX = window.innerWidth / 2;
         let MouseY = window.innerHeight / 2;
-        let mouseZ = 0;
 
         document.addEventListener('mousemove', (event) => {
             MouseX = (event.clientX - window.innerWidth / 2) / 100;
@@ -39,14 +36,14 @@ export default function Modal() {
         const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current!, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
-        camera.position.z = objectToRender === 'dino' ? 25 : 5;
+        camera.position.z = 5;
 
         const toplight = new THREE.DirectionalLight(0xffffff, 1);
         toplight.position.set(500, 500, 500);
         toplight.castShadow = true;
         scene.add(toplight);
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, objectToRender === 'dino' ? 5 : 1);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
         scene.add(ambientLight);
 
 
@@ -54,14 +51,12 @@ export default function Modal() {
         function animate() {
             requestAnimationFrame(animate);
 
-            if (object && objectToRender === 'eye') {
-                // Clamp rotation to 0-180 degrees (0 to Math.PI radians)
-                const targetRotationY = MouseX / 2;
-                const targetRotationX = MouseY / 4;
+            // Clamp rotation to 0-180 degrees (0 to Math.PI radians)
+            const targetRotationY = MouseX / 2;
+            const targetRotationX = MouseY / 4;
 
-                object.rotation.y = Math.max(-0.9, Math.min(0, targetRotationY));
-                object.rotation.x = Math.max(-4, Math.min(0, targetRotationX));
-            }
+            object.rotation.y = Math.max(-0.9, Math.min(0, targetRotationY));
+            object.rotation.x = Math.max(-4, Math.min(0, targetRotationX));
             renderer.render(scene, camera);
         }
         animate();
